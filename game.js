@@ -4,12 +4,21 @@ var userClickedPattern = [];
 var level = 0;
 var started = false
 
+$("#start-btn").click(function () { 
+    if (!started) {
+        nextSequence();
+        $("#level-title").text("Level " + level);
+        started = true;
+        $("#start-btn").toggle();
+    }  
+});
 
 $(document).keydown(function () {
     if (!started) {
         nextSequence();
         $("#level-title").text("Level " + level);
         started = true;
+        $("#start-btn").toggle();
     }
 });
 
@@ -72,4 +81,5 @@ function startOver(){
     level=0;
     gamePattern=[];
     started=false;
+    $("#start-btn").toggle();
 }
