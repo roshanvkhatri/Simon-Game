@@ -4,30 +4,37 @@ var userClickedPattern = [];
 var level = 0;
 var started = false
 
-$("#start-btn").click(function () { 
-    if (!started) {
-        nextSequence();
-        $("#level-title").text("Level " + level);
-        started = true;
-        $("#start-btn").toggle();
-    }  
-});
+if (!started) {
+    $("#start-btn").click(function () {
+        if (!started) {
+            nextSequence();
+            $("#level-title").text("Level " + level);
+            started = true;
+            $("#start-btn").hide();
+        }
+    });
 
-$(document).keydown(function () {
-    if (!started) {
-        nextSequence();
-        $("#level-title").text("Level " + level);
-        started = true;
-        $("#start-btn").toggle();
-    }
-});
+    $(document).keydown(function () {
+        if (!started) {
+            nextSequence();
+            $("#level-title").text("Level " + level);
+            started = true;
+            $("#start-btn").hide();
+        }
+    });
+}
 
 $(".btn").click(function () {
-    var userChosenColour = $(this).attr("id");
-    userClickedPattern.push(userChosenColour);
-    playSound(userChosenColour);
-    animatePress(userChosenColour);
-    checkAnswer(userClickedPattern.length - 1);
+    if (started) {
+        var userChosenColour = $(this).attr("id");
+        userClickedPattern.push(userChosenColour);
+        playSound(userChosenColour);
+        animatePress(userChosenColour);
+        checkAnswer(userClickedPattern.length - 1);
+    }
+    else{
+        alert("Please Start the Game!")
+    }
 });
 
 function nextSequence() {
@@ -77,9 +84,9 @@ function checkAnswer(currentLevel) {
 
 }
 
-function startOver(){
-    level=0;
-    gamePattern=[];
-    started=false;
+function startOver() {
+    level = 0;
+    gamePattern = [];
+    started = false;
     $("#start-btn").toggle();
 }
